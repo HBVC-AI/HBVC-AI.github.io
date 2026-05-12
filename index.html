@@ -4,31 +4,461 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>HBVC-AI</title>
+
   <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      max-width: 800px;
-      margin: 80px auto;
-      padding: 0 20px;
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: #222;
+      background: #ffffff;
       line-height: 1.6;
     }
-    h1 {
-      color: #222;
+
+    header {
+      min-height: 70vh;
+      background:
+        linear-gradient(rgba(0, 0, 0, 0.58), rgba(0, 0, 0, 0.58)),
+        url("bg001.png");
+      background-size: cover;
+      background-position: center;
+      color: white;
+      display: flex;
+      flex-direction: column;
     }
-    a {
-      color: #0969da;
+
+    nav {
+      width: 90%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 24px;
+      opacity: 0.85;
+    }
+
+    nav a:hover {
+      opacity: 1;
+      color: #f0b44c;
+    }
+
+    .hero {
+      flex: 1;
+      width: 90%;
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-content {
+      max-width: 720px;
+    }
+
+    .hero h1 {
+      font-size: 58px;
+      line-height: 1.1;
+      margin-bottom: 22px;
+      letter-spacing: 1px;
+    }
+    
+    .hero-title {
+      margin-bottom: 22px;
+      max-width: 1100px;
+      width: max-content;
+      line-height: 1.05;
+    }
+
+    .hero-title span {
+      display: block;
+    }
+
+    .hero-title-main {
+      font-size: 48px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+    }
+
+    .hero-title-lab {
+      font-size: 42px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      margin-top: 8px;
+    }
+
+    .hero-title-page {
+      font-size: 28px;
+      font-weight: 500;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #f0b44c;
+      margin-top: 14px;
+    }
+
+    .hero p {
+      font-size: 20px;
+      color: #e6e6e6;
+      margin-bottom: 34px;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 13px 28px;
+      background: #f0b44c;
+      color: #111;
+      text-decoration: none;
+      font-weight: 700;
+      border-radius: 2px;
+      text-transform: uppercase;
+      font-size: 13px;
+      letter-spacing: 1px;
+    }
+
+    .button:hover {
+      background: #ffca67;
+    }
+
+    section {
+      padding: 80px 20px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 55px;
+    }
+
+    .section-title span {
+      color: #aaa;
+      font-size: 15px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .section-title h2 {
+      font-size: 34px;
+      margin-top: 8px;
+      text-transform: uppercase;
+    }
+
+	.no-uppercase {
+	  text-transform: none !important;
+	}
+
+    .underline {
+      width: 45px;
+      height: 3px;
+      background: #f0b44c;
+      margin: 16px auto 0;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 45px;
+      align-items: center;
+    }
+
+    .about-card {
+      background: #f7f7f7;
+      padding: 36px;
+      border-left: 4px solid #f0b44c;
+    }
+
+    .about-card h3 {
+      font-size: 24px;
+      margin-bottom: 18px;
+      text-transform: uppercase;
+    }
+
+    .about-card p {
+      color: #555;
+      margin-bottom: 14px;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 25px;
+      margin-top: 35px;
+    }
+
+    .feature {
+      background: white;
+      border: 1px solid #eee;
+      padding: 30px;
+      text-align: center;
+      transition: 0.2s ease;
+    }
+
+    .feature:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .feature-icon {
+      font-size: 36px;
+      margin-bottom: 14px;
+    }
+
+    .feature h3 {
+      margin-bottom: 10px;
+      font-size: 18px;
+      text-transform: uppercase;
+    }
+
+    .feature p {
+      color: #666;
+      font-size: 15px;
+    }
+
+    .projects {
+      background:
+        linear-gradient(rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.72)),
+        url("https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1800&q=80");
+      background-size: cover;
+      background-position: center;
+      color: white;
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+      align-items: stretch;
+    }
+
+    .project-card {
+      margin: 0;
+    }
+
+    .project-card {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 35px;
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+      backdrop-filter: blur(4px);
+    }
+
+    .project-card h3 {
+      font-size: 28px;
+      margin-bottom: 15px;
+    }
+
+    .project-card p {
+      color: #ddd;
+      margin-bottom: 25px;
+    }
+
+    footer {
+      background: #111;
+      color: #aaa;
+      text-align: center;
+      padding: 35px 20px;
+      font-size: 14px;
+    }
+
+    footer strong {
+      color: white;
+    }
+
+    @media (max-width: 800px) {
+      .project-grid {
+        grid-template-columns: 1fr;
+      }
+
+      nav {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      nav a {
+        margin: 0 8px;
+      }
+
+      .hero h1 {
+        font-size: 40px;
+      }
+
+      .hero-title {
+        width: auto;
+        max-width: 100%;
+      }
+
+      .hero-title-main {
+        font-size: 34px;
+        white-space: normal;
+      }
+
+      .hero-title-lab {
+        font-size: 28px;
+      }
+
+      .hero-title-page {
+        font-size: 18px;
+        letter-spacing: 2px;
+      }
+
+      .hero p {
+        font-size: 17px;
+      }
+
+      .about-grid,
+      .features {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
-<body>
-  <h1>HBVC-AI</h1>
-  <p>Welcome to the HBVC-AI Lab homepage.</p>
 
-  <h2>Projects</h2>
-  <ul>
-    <li><a href="https://github.com/HBVC-AI/SceneVGGT">SceneVGGT</a></li>
-     <li><a href="https://samannot.github.io/">SAMannot</a></li>
-     <li><a href="https://letseeapp.com/">LetSee app</a></li>
-  </ul>
+<body>
+  <header>
+    <nav>
+      <div class="logo">HBVC-AI Lab</div>
+      <div>
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <!-- <a href="https://github.com/HBVC-AI">GitHub</a> -->
+      </div>
+    </nav>
+
+    <div class="hero">
+      <div class="hero-content">
+        <h1 class="hero-title">
+          <span class="hero-title-main">Hungarian Bionic Vision Center</span>
+          <span class="hero-title-lab">Artificial Intelligence Lab</span>
+          <span class="hero-title-page">Project Page</span>
+        </h1>
+        <p>
+          HBVC-AI Lab focuses on research in computer vision and 3D scene understanding, while developing tools, datasets, and intelligent visual systems for assistive technologies.
+        </p>
+        <a class="button" href="#projects">Explore Projects</a>
+      </div>
+    </div>
+  </header>
+
+  <section id="about">
+    <div class="container">
+      <div class="section-title">
+        <span>Welcome to</span>
+        <h2 class="no-uppercase">HBVC-AI Lab</h2>
+        <div class="underline"></div>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-card">
+          <!-- <h3>About the group</h3> -->
+          <p>
+            We focus on research in scene understanding, efficient artificial intelligence
+            and computer vision methods, and advanced visual technologies.
+          </p>
+          <p>
+            We transform our research into real-world applications that support visual
+            perception, 3D scene interpretation, human-centered interaction, and accessible
+            assistive technologies for visually impaired people.
+          </p>
+          </p>
+        </div>
+
+        <div class="features">
+          <div class="feature">
+            <div class="feature-icon">👁️</div>
+            <h3>Vision</h3>
+            <p>Computer vision and visual scene understanding.</p>
+          </div>
+
+          <div class="feature">
+            <div class="feature-icon">🧠</div>
+            <h3>AI</h3>
+            <p>Machine learning models and intelligent systems.</p>
+          </div>
+
+          <div class="feature">
+            <div class="feature-icon">🌐</div>
+            <h3>Open Source</h3>
+            <p>Public repositories, demos, and research code.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="projects" id="projects">
+    <div class="container">
+      <div class="section-title">
+        <span>Explore</span>
+        <h2>Projects</h2>
+        <div class="underline"></div>
+      </div>
+
+      <div class="project-grid">
+        <div class="project-card">
+          <h3>SceneVGGT</h3>
+          <p>
+            A project related to efficient visual scene understanding and
+            computer vision research.
+          </p>
+          <a class="button" href="https://github.com/HBVC-AI/SceneVGGT">
+            View on GitHub
+          </a>
+        </div>
+
+        <div class="project-card">
+          <h3>SAMannot</h3>
+          <p>
+            A project for annotation workflows and computer vision research.
+          </p>
+          <a class="button" href="https://samannot.github.io/">
+            View on GitHub
+          </a>
+        </div>
+
+        <div class="project-card">
+          <h3>LetSee</h3>
+          <p>
+            An assistive app focused on accessible, practical,
+            and easy-to-use tools for visually impaired people.
+          </p>
+          <a class="button" href="https://letseeapp.com/">
+            View Project
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+      
+    </div>
+  </section>
+
+  <footer>
+    <p><strong>HBVC-AI</strong> · Research, AI and Visual Computing</p>
+  </footer>
 </body>
 </html>
